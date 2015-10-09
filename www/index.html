@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+
+        <link type="text/css" rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css"
+         media="screen,projection"/>
+         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="bower_components/mustache/mustache.js"></script>
+
+        <script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
+
+        <script type="text/javascript" src="bower_components/pouchdb/dist/pouchdb.min.js"></script>
+        <script type="text/javascript" src="bower_components/pouchdb-find/dist/pouchdb.find.min.js"></script>
+
+        <title>Hello World</title>
+    </head>
+    <body>
+
+            <div id="errorMessageModal" class="modal bottom-sheet">
+              <div class="modal-content">
+                <h4>Error</h4>
+                <p id="errorMessage">No error</p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn green">Ok</a>
+              </div>
+            </div>
+
+                <div id="app">
+
+
+                    <div class="navbar-fixed">
+                      <nav>
+                        <div class="nav-wrapper blue darken-1">
+                          <a href="#" class="brand-logo"><h5 id="home-date"></h5></a>
+                          <!--ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a href="sass.html">Sass</a></li>
+                            <li><a href="components.html">Components</a></li>
+                            <li><a href="javascript.html">JavaScript</a></li>
+                          </ul-->
+                        </div>
+                      </nav>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col s12">
+                          <ul class="tabs">
+                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" id="tab-types" class="active" href="#entradas">Entradas</a></li>
+                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" href="#report" onclick="app.loadEntries()">Report</a></li>
+                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" href="#config">Config</a></li>
+                          </ul>
+                        </div>
+
+                        <div id="entradas" class="col s12">
+                          <br clear="all">
+                          <button class="waves-effect waves-light btn green" id="nextButton" onclick="EntradaController.checkIn()">check In</button>
+                          <button class="waves-effect waves-light btn green" id="nextButton" onclick="EntradaController.checkOut()">check Out</button>
+                          <button class="waves-effect waves-light btn green" id="nextButton" onclick="EntradaController.AddCheckIn()">Add Check In</button>
+                          <button class="waves-effect waves-light btn green" id="nextButton" onclick="EntradaController.AddCheckOut()">Add Check Out</button>
+                          <div id="entradas_container">
+                          </div>
+                        </div>
+
+                        <div id="report" class="col s12">
+
+                            <br clear="all">
+
+                            <div class="row">
+                               <button class="btn-floating waves-effect waves-light btn-large btn green" onclick="app.loadEntries();"><i class="mdi-action-cached"></i></button>
+                               <button class="btn-floating waves-effect btn-large waves-light btn yellow darken-1" onclick="app.sendEmail();"><i class="mdi-content-send"></i></button>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="section">
+                              <h5>Expenses List</h5>
+                              <p id="totalValue">Total: $0.00</p>
+
+                              <div id="report_content" ></div>
+
+                              <div class="row center" id="pagButtons">
+                                <button class="waves-effect waves-light btn green" id="prevButton"
+                                 onclick="app.prevEntries()"><i class="mdi-image-navigate-bedatefore"></i></button>
+
+                                 <button class="waves-effect waves-light btn green" id="nextButton"
+                                  onclick="app.nextEntries()"><i class="mdi-image-navigate-next"></i></button>
+                              </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div id="config" class="col s12">
+                          <div id="config_content"></div>
+                        </div>
+
+                    </div>
+
+              </div>
+
+
+        <script type="text/javascript" src="js/repository.js"></script>
+        <script type="text/javascript" src="js/home_controller.js"></script>
+        <script type="text/javascript" src="js/entrada_controller.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>

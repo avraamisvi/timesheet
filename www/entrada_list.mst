@@ -1,0 +1,24 @@
+<br clear="all">
+<table class="table">
+
+  <thead>
+          <tr>
+            <th>Entrada</th>
+            <th>Saida</th>
+            <th>Total</th>
+            <th>Tarefa</th>
+          </tr>
+  </thead>
+
+  <tbody>
+    {{#entradas}}
+        <tr>
+          <td>{{doc.entrada.hora}}:{{doc.entrada.minuto}} {{doc.entrada.periodo}}</td>
+          <td>{{doc.saida.hora}}:{{doc.saida.minuto}} {{doc.saida.periodo}}</td>
+          <td>{{doc.total}}</td>
+          <td>{{doc.tarefa}}</td>
+        </tr>
+    {{/entradas}}
+  </tbody>
+
+</table>
