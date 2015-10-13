@@ -1,6 +1,8 @@
 
 var EntradaController = {
 
+   ultimaEntrada: null,
+
    listarEntradas: function() {
 
      Repository.obterEntradas(new Date(), function(err){
@@ -13,6 +15,9 @@ var EntradaController = {
 
          var rendered = Mustache.render(template, {entradas:result.docs});
 
+         if(result.docs.length > 0)
+          EntradaController.ultimaEntrada = result.docs[result.docs.length-1];
+
          $('#entradas_container').html(rendered);
        });
 
@@ -22,27 +27,37 @@ var EntradaController = {
 
    checkIn: function() {
 
+     dateTime = this.getDateTime();
+
      entrada = {
        _id: new Date().toISOString(),
-       entrada: {hora:10, minuto: 10, periodo: 'AM'},
-       saida: {hora:10, minuto: 10, periodo: 'PM'},
+       entrada: {hora:dateTime.hour, minuto: dateTime.min, periodo: 'AM'},
+       saida: {hora:dateTime.hour, minuto: dateTime.min, periodo: 'PM'},
        total: 10,
+       aberto: true,
        tarefa_id: 1,
        tarefa: "abacate",
-       data: "09/09/2015",
+       data: dateTime.date,
      };
 
      Repository.salvarEntrada(entrada, function(err) {
        console.log(err)
      }, function(ent, result) {//sucesso
        console.log(result)
+       EntradaController.listarEntradas();
      });
-   }
+   },
 
-   /*getTime: function(date) {
+   getDateTime: function(date) {
+     date = new Date();
+
      day = date.getDate();
      month = date.getMonth();
      hour = date.getHours();
      min = date.getMinutes()
-   }*/
+
+     date = ''+(day<10?'0'+day:day)+'/'+(month<10?'0'+month:month)+'/'+date.getFullYear();
+
+     return {date: date, min: min, hour: hour};
+   }
  }

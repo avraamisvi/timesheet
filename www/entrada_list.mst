@@ -12,11 +12,11 @@
 
   <tbody>
     {{#entradas}}
-        <tr>
-          <td>{{doc.entrada.hora}}:{{doc.entrada.minuto}} {{doc.entrada.periodo}}</td>
-          <td>{{doc.saida.hora}}:{{doc.saida.minuto}} {{doc.saida.periodo}}</td>
-          <td>{{doc.total}}</td>
-          <td>{{doc.tarefa}}</td>
+        <tr onclick="EntradaController.editarEntrada('{{_id}}')">
+          <td>{{entrada.hora}}:{{entrada.minuto}} {{entrada.periodo}}</td>
+          <td>{{saida.hora}}:{{saida.minuto}} {{saida.periodo}}</td>
+          <td>{{total}}</td>
+          <td>{{tarefa}}</td>
         </tr>
     {{/entradas}}
   </tbody>
