@@ -3,8 +3,8 @@
 
   <thead>
           <tr>
-            <th>Entrada</th>
-            <th>Saida</th>
+            <th>Inicio</th>
+            <th>Fim</th>
             <th>Total</th>
             <th>Tarefa</th>
           </tr>
@@ -12,9 +12,9 @@
 
   <tbody>
     {{#entradas}}
-        <tr onclick="EntradaController.editarEntrada('{{_id}}')">
-          <td>{{entrada.hora}}:{{entrada.minuto}} {{entrada.periodo}}</td>
-          <td>{{saida.hora}}:{{saida.minuto}} {{saida.periodo}}</td>
+        <tr onclick="EntradaController.editarEntrada('{{_id}}')" class="{{estilo}}" >
+          <td>{{entradaHoraMin}}</td>
+          <td>{{saidaHoraMin}}</td>
           <td>{{total}}</td>
           <td>{{tarefa}}</td>
         </tr>
@@ -22,3 +22,9 @@
   </tbody>
 
 </table>
+
+<script>
+  /*setInterval(function() {
+    EntradaController.listarEntradas();
+  },30000)*/
+</script>

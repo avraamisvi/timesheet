@@ -15,7 +15,7 @@ var Repository = {
 
     this.entradasdb.createIndex({
       index: {
-        fields: ['data']
+        fields: ['milliseconds']
       }
     }).then(function (result) {
       console.log(result)
@@ -34,19 +34,45 @@ var Repository = {
     return ''+(day<10?'0'+day:day)+'/'+(month<10?'0'+month:month)+'/'+date.getFullYear();
   },
 
+  obterTarefas: function(errorCall, sucessoCall) {
+    sucessoCall([
+              {_id:1, descricao:"ABACATE"},
+              {_id:321, descricao:"asdasdsadsad"}
+           ]);
+  },
+
+  obterEntrada: function(id, errorCall, sucessoCall) {
+
+    this.entradasdb.get(id).then(function (doc) {
+        sucessoCall(doc);
+      }).catch(function (err) {
+        errorCall(err);
+      });
+  },
+
   obterEntradas: function(data, errorCall, sucessoCall) {
 
     data = this.getFormatedDate(data);
 
     console.debug(data);
 
-    this.entradasdb.find({
-      selector: {data: data}
+    this.entradasdb.createIndex({
+      index: {
+        fields: ['milliseconds']
+      }
     }).then(function (result) {
-      sucessoCall(result);
-    }).catch(function (err) {
-      errorCall(err);
-    });
+
+      console.log(result)
+
+      Repository.entradasdb.find({
+        selector: {data: data, milliseconds: {'$exists':true}},
+        sort:[{'milliseconds':'asc'}]
+      }).then(function (result) {
+        sucessoCall(result);
+      }).catch(function (err) {
+        errorCall(err);
+      });
+    })
   },
 
   salvarEntrada: function(entrada, errorCall, sucessoCall) {

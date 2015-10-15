@@ -1,0 +1,30 @@
+<br clear="all">
+<div class="row">
+    <div class="col s12">
+      <div class="row">
+          <label for="txt_tarefa">Tarefa</label>
+        <div class="input-field col s12">
+          <input placeholder="Tarefa" id="txt_tarefa" type="text" class="validate" value="{{entrada.tarefa}}">
+          <select value="{{entrada.tarefa}}">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+          <label for="txt_inicio">Inicio</label>
+        <div class="input-field col s12">
+          <input id="txt_inicio" type="time" class="validate" value="{{entrada.entrada.hora}}:{{entrada.entrada.minuto}}">
+        </div>
+      </div>
+      <div class="row">
+          <label for="txt_fim">Fim</label>
+        <div class="input-field col s12">
+          <input id="txt_fim" type="time" class="validate" value="{{entrada.saida.hora}}:{{entrada.saida.minuto}}">
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  placeholder="23:59" pattern=([01]?[0-9]|2[0-3]):[0-5][0-9] -->
