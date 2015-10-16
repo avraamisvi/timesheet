@@ -241,6 +241,10 @@ var EntradaController = {
      });
    },
 
+   removerEntrada: function(id) {
+     Repository.removerEntrada(id,function(err){console.log(err);}, function(res){EntradaController.listarEntradas();});
+   },
+
    formatTime: function(hour, min) {
      return ''+(hour<10?'0'+hour:hour)+':'+(min<10?'0'+min:min);
    },

@@ -52,6 +52,7 @@
   </div>
 
 <button class="waves-effect waves-light btn green" id="btnSalvar" onclick="salvarEntrada('{{entrada._id}}')">Salvar</button>
+<button class="waves-effect waves-light btn green" id="btnSalvar" onclick="removerEntrada('{{entrada._id}}')">Remover</button>
 
 <script>
 
@@ -71,6 +72,10 @@ function salvarEntrada(id) {
     EntradaController.salvarEntrada(id);
   }
 
+}
+
+function salvarEntrada(id) {
+  EntradaController.removerEntrada(id);
 }
 
 </script>
