@@ -1,0 +1,37 @@
+<br clear="all">
+<div class="row">
+    <div class="col s12">
+      <div class="row">
+          <label for="txt_nome">Nome</label>
+        <div class="input-field col s12">
+          <input placeholder="Nome" id="txt_nome" type="text" class="validate" value="{{cliente.nome}}">
+        </div>
+      </div>
+      <div class="row">
+          <label for="txt_codigo">Código</label>
+        <div class="input-field col s12">
+          <input id="txt_codigo" type="text" class="validate" value="{{cliente.codigo}}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<button class="waves-effect waves-light btn green" onclick="salvarCliente('{{cliente._id}}')">Salvar</button>
+<button class="waves-effect waves-light btn green" onclick="removerCliente('{{cliente._id}}')">Remover</button>
+
+<script>
+
+function salvarCliente(id) {
+
+  var txt_nome = $("#txt_nome").val();
+  var txt_codigo = $("#txt_codigo").val();
+
+  if(txt_codigo && txt_nome) {
+    ClienteController.salvarCliente(id);
+  } else {
+    console.log("vazio")
+  }
+
+}
+
+</script>

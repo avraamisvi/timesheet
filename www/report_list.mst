@@ -1,0 +1,32 @@
+<br clear="all">
+
+<div class="row">
+   <button class="btn-floating waves-effect waves-light btn-large btn green" onclick="ReportController.sincronizarServidor();"><i class="mdi-action-cached"></i></button>
+   <button class="btn-floating waves-effect btn-large waves-light btn yellow darken-1" onclick="ReportController.enviarEmail();"><i class="mdi-content-send"></i></button>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <h5>Selecione o periodo desejado</h5>
+
+  <div class="row">
+        <div class="col s12">
+
+          <div class="row">
+              <label for="txt_inicio_report">Inicio</label>
+            <div class="input-field col s12">
+              <input id="txt_inicio_report" type="date" class="validate" value="{{periodo.inicio}}">
+            </div>
+          </div>
+          <div class="row">
+              <label for="txt_fim_report">Fim</label>
+            <div class="input-field col s12">
+              <input id="txt_fim_report" type="date" class="validate" value="{{periodo.fim}}">
+            </div>
+          </div>
+        </div>
+
+  </div>
+
+</div>

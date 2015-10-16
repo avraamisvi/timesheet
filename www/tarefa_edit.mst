@@ -1,0 +1,49 @@
+<br clear="all">
+<div class="row">
+    <div class="col s12">
+      <div class="row">
+          <label for="sel_clientes">Cliente</label>
+        <div class="input-field col s12">
+          <select id="sel_clientes" class="browser-default">
+            {{#clientes}}
+                <option id="cliente_id_{{doc._id}}" value="{{doc._id}}"
+                {{#selecionado}}
+                  selected
+                {{/selecionado}}
+                >{{doc.nome}}</option>
+            {{/clientes}}
+          </select>
+        </div>
+      </div>
+      <div class="row">
+          <label for="txt_nome">Nome</label>
+        <div class="input-field col s12">
+          <input placeholder="Nome" id="txt_nome" type="text" class="validate" value="{{tarefa.nome}}">
+        </div>
+      </div>
+      <div class="row">
+          <label for="txt_codigo">Código</label>
+        <div class="input-field col s12">
+          <input id="txt_codigo" type="text" class="validate" value="{{tarefa.codigo}}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<button class="waves-effect waves-light btn green" onclick="salvarTarefa('{{tarefa._id}}')">Salvar</button>
+<button class="waves-effect waves-light btn green" onclick="removerTarefa('{{tarefa._id}}')">Remover</button>
+
+<script>
+
+function salvarTarefa(id) {
+
+  var txt_nome = $("#txt_nome").val();
+  var txt_codigo = $("#txt_codigo").val();
+
+  if(txt_codigo && txt_nome) {
+    TarefaController.salvarTarefa(id);
+  }
+
+}
+
+</script>

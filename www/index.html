@@ -82,9 +82,10 @@
 
                         <div class="col s12">
                           <ul class="tabs">
-                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" id="tab-types" class="active" href="#entradas">Entradas</a></li>
-                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" href="#report" onclick="app.loadEntries()">Report</a></li>
-                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" href="#config">Config</a></li>
+                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" id="tab-types" class="active" href="#entradas" onclick="EntradaController.listarEntradas()">Entradas</a></li>
+                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" href="#report" onclick="ReportController.iniciar()">Relatório</a></li>
+                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" href="#tarefas" onclick="TarefaController.listarClientes()">Tarefas</a></li>
+                            <li class="tab col s3 truncate" ><a class="blue-text text-darken-2" href="#clientes" onclick="ClienteController.listarClientes()">Clientes</a></li>
                           </ul>
                         </div>
 
@@ -100,37 +101,19 @@
 
                         <div id="report" class="col s12">
 
-                            <br clear="all">
-
-                            <div class="row">
-                               <button class="btn-floating waves-effect waves-light btn-large btn green" onclick="app.loadEntries();"><i class="mdi-action-cached"></i></button>
-                               <button class="btn-floating waves-effect btn-large waves-light btn yellow darken-1" onclick="app.sendEmail();"><i class="mdi-content-send"></i></button>
-                            </div>
-
-                            <div class="divider"></div>
-
-                            <div class="section">
-                              <h5>Expenses List</h5>
-                              <p id="totalValue">Total: $0.00</p>
-
-                              <div id="report_content" ></div>
-
-                              <div class="row center" id="pagButtons">
-                                <button class="waves-effect waves-light btn green" id="prevButton"
-                                 onclick="app.prevEntries()"><i class="mdi-image-navigate-bedatefore"></i></button>
-
-                                 <button class="waves-effect waves-light btn green" id="nextButton"
-                                  onclick="app.nextEntries()"><i class="mdi-image-navigate-next"></i></button>
-                              </div>
-
-                            </div>
-
-
                         </div>
 
 
-                        <div id="config" class="col s12">
-                          <div id="config_content"></div>
+                        <div id="tarefas" class="col s12">
+                          <br clear="all">
+                          <button class="waves-effect waves-light btn green" id="btnNovaTarefa" onclick="TarefaController.novaTarefa()">Nova</button>
+                          <div id="tarefas_content"></div>
+                        </div>
+
+                        <div id="clientes" class="col s12">
+                          <br clear="all">
+                          <button class="waves-effect waves-light btn green" id="btnNovoCliente" onclick="ClienteController.novoCliente()">Novo</button>
+                          <div id="clientes_content"></div>
                         </div>
 
                     </div>
@@ -141,6 +124,10 @@
         <script type="text/javascript" src="js/repository.js"></script>
         <script type="text/javascript" src="js/home_controller.js"></script>
         <script type="text/javascript" src="js/entrada_controller.js"></script>
+        <script type="text/javascript" src="js/cliente_controller.js"></script>
+        <script type="text/javascript" src="js/tarefa_controller.js"></script>
+        <script type="text/javascript" src="js/report_controller.js"></script>
+
         <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>

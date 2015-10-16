@@ -15,7 +15,7 @@
         <tr onclick="EntradaController.editarEntrada('{{_id}}')" class="{{estilo}}" >
           <td>{{entradaHoraMin}}</td>
           <td>{{saidaHoraMin}}</td>
-          <td>{{total}}</td>
+          <td>{{getTotal}}</td>
           <td>{{tarefa}}</td>
         </tr>
     {{/entradas}}

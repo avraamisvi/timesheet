@@ -2,29 +2,75 @@
 <div class="row">
     <div class="col s12">
       <div class="row">
+          <label for="sel_clientes">Cliente</label>
+        <div class="input-field col s12">
+          <select id="sel_clientes" class="browser-default">
+            {{#clientes}}
+                <option id="cliente_id_{{doc._id}}" value="{{doc._id}}"
+                {{#selecionado}}
+                  selected
+                {{/selecionado}}
+                >{{doc.nome}}</option>
+            {{/clientes}}
+          </select>
+        </div>
+      </div>
+      <div class="row">
           <label for="txt_tarefa">Tarefa</label>
         <div class="input-field col s12">
-          <input placeholder="Tarefa" id="txt_tarefa" type="text" class="validate" value="{{entrada.tarefa}}">
-          <select value="{{entrada.tarefa}}">
-                <option value="" disabled selected>Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+          <!--input placeholder="Tarefa" id="txt_tarefa" type="text" class="validate" value="{{entrada.tarefa}}"-->
+          <select id="sel_tarefas" class="browser-default">
+            {{#tarefas}}
+                <option id="tarefa_id_{{_id}}" value="{{_id}}"
+                {{#selecionado}}
+                  selected
+                {{/selecionado}}
+                >{{nome}}</option>
+            {{/tarefas}}
           </select>
         </div>
       </div>
       <div class="row">
           <label for="txt_inicio">Inicio</label>
         <div class="input-field col s12">
-          <input id="txt_inicio" type="time" class="validate" value="{{entrada.entrada.hora}}:{{entrada.entrada.minuto}}">
+          <input id="txt_inicio" type="time" class="validate" value="{{formatTimeEntrada}}">
         </div>
       </div>
       <div class="row">
           <label for="txt_fim">Fim</label>
         <div class="input-field col s12">
-          <input id="txt_fim" type="time" class="validate" value="{{entrada.saida.hora}}:{{entrada.saida.minuto}}">
+          <input id="txt_fim" type="time" class="validate" value="{{formatTimeSaida}}">
         </div>
       </div>
     </div>
+    <div class="row">
+        <label for="txt_descricao">Descrição</label>
+      <div class="input-field col s12">
+        <input id="txt_descricao" type="text" class="validate" value="{{entrada.descricao}}">
+      </div>
+    </div>
   </div>
-<!--  placeholder="23:59" pattern=([01]?[0-9]|2[0-3]):[0-5][0-9] -->
+
+<button class="waves-effect waves-light btn green" id="btnSalvar" onclick="salvarEntrada('{{entrada._id}}')">Salvar</button>
+
+<script>
+
+function salvarEntrada(id) {
+
+  var entrada_hora = $("#txt_inicio").val()
+  entrada_hora = entrada_hora.split(":");
+  var entrada_min = parseInt(entrada_hora[1]);
+  entrada_hora = parseInt(entrada_hora[0]);
+
+  var saida_hora = $("#txt_fim").val()
+  saida_hora = saida_hora.split(":");
+  var saida_min = parseInt(saida_hora[1]);
+  saida_hora = parseInt(saida_hora[0]);
+
+  if(entrada_hora <= saida_hora && (saida_min >= entrada_min)) {
+    EntradaController.salvarEntrada(id);
+  }
+
+}
+
+</script>

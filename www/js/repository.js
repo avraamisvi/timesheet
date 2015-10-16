@@ -34,20 +34,34 @@ var Repository = {
     return ''+(day<10?'0'+day:day)+'/'+(month<10?'0'+month:month)+'/'+date.getFullYear();
   },
 
-  obterTarefas: function(errorCall, sucessoCall) {
-    sucessoCall([
-              {_id:1, descricao:"ABACATE"},
-              {_id:321, descricao:"asdasdsadsad"}
-           ]);
+  obterTarefa: function(id, errorCall, sucessoCall) {
+
+      this.obterPorId(this.atividadesdb, id, errorCall, sucessoCall);
+  },
+
+  obterTarefas: function(cliente_id, errorCall, sucessoCall) {
+
+    this.atividadesdb.createIndex({
+      index: {
+        fields: ['cliente_id']
+      }
+    }).then(function (result) {
+
+      Repository.atividadesdb.find({
+        selector: {cliente_id: cliente_id}
+      }).then(function (result) {
+        sucessoCall(result);
+      }).catch(function (err) {
+        errorCall(err);
+      });
+
+    });
+
   },
 
   obterEntrada: function(id, errorCall, sucessoCall) {
 
-    this.entradasdb.get(id).then(function (doc) {
-        sucessoCall(doc);
-      }).catch(function (err) {
-        errorCall(err);
-      });
+      this.obterPorId(this.entradasdb, id, errorCall, sucessoCall);
   },
 
   obterEntradas: function(data, errorCall, sucessoCall) {
@@ -75,6 +89,53 @@ var Repository = {
     })
   },
 
+  obterEntradasPeriodo: function(inicio, fim, errorCall, sucessoCall) {
+
+    this.entradasdb.createIndex({
+      index: {
+        fields: ['milliseconds']
+      }
+    }).then(function (result) {
+
+      Repository.entradasdb.find({
+        selector: {$and: [
+          {milliseconds: {$gte: inicio}},
+          {milliseconds: {$lte: fim}},
+          ]},
+        sort:[{'milliseconds':'asc'}]
+      }).then(function (result) {
+        sucessoCall(result);
+      }).catch(function (err) {
+        errorCall(err);
+      });
+    })
+  },
+
+  obterCliente: function(id, errorCall, sucessoCall) {
+    this.obterPorId(this.clientesdb, id, errorCall, sucessoCall);
+  },
+
+  obterPorId: function(db, id, errorCall, sucessoCall) {
+    db.get(id).then(function (doc) {
+        sucessoCall(doc);
+      }).catch(function (err) {
+        errorCall(err);
+      });
+  },
+
+  obterClientes: function(errorCall, sucessoCall) {
+
+    this.clientesdb.allDocs({
+      include_docs: true,
+      attachments: true
+    }).then(function (result) {
+      sucessoCall(result)
+    }).catch(function (err) {
+      errorCall(err);
+    });
+  },
+
+
   salvarEntrada: function(entrada, errorCall, sucessoCall) {
     this.entradasdb.put(entrada, function callback(err, result) {
       if (!err) {
@@ -95,7 +156,7 @@ var Repository = {
     });
   },
 
-  salvarAtividade: function(atividade, errorCall, sucessoCall) {
+  salvarTarefa: function(atividade, errorCall, sucessoCall) {
     this.atividadesdb.put(atividade, function callback(err, result) {
       if (!err) {
         sucessoCall(atividade, result);

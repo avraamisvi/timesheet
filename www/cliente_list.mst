@@ -1,0 +1,20 @@
+<br clear="all">
+<table class="table">
+
+  <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Codigo</th>
+          </tr>
+  </thead>
+
+  <tbody>
+    {{#clientes}}
+        <tr onclick="ClienteController.editarCliente('{{doc._id}}')">
+          <td>{{doc.nome}}</td>
+          <td>{{doc.codigo}}</td>
+        </tr>
+    {{/clientes}}
+  </tbody>
+
+</table>
