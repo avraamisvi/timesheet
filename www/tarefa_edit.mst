@@ -46,4 +46,8 @@ function salvarTarefa(id) {
 
 }
 
+function removerTarefa(id) {
+  TarefaController.removerTarefa(id);
+}
+
 </script>

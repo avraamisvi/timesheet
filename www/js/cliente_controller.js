@@ -62,4 +62,23 @@ var ClienteController = {
     });
 
   }
+
+  removerCliente: function(id) {
+
+    Repository.obterCliente(id, function(err){console.log(err)}, function(cliente){
+      Repository.removerCliente(cliente, function(err){console.log(err)}, function(result) {
+        Repository.obterTarefasCliente(id, ClienteController.tratarErro, function(res){
+          for(i =0;i < res.docs.length;i++) {
+            Repository.removerTarefa(res.docs[i]._id, TarefaController.tratarErro, function(res){console.log(res)});
+          }
+        });
+        ClienteController.listarClientes();
+      });
+    });
+
+  },
+
+  tratarErro: function(err) {
+
+  }
 }

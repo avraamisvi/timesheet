@@ -74,7 +74,7 @@ function salvarEntrada(id) {
 
 }
 
-function salvarEntrada(id) {
+function removerEntrada(id) {
   EntradaController.removerEntrada(id);
 }
 

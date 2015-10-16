@@ -34,6 +34,10 @@ var Repository = {
     return ''+(day<10?'0'+day:day)+'/'+(month<10?'0'+month:month)+'/'+date.getFullYear();
   },
 
+  removerTarefa: function(id, errorCall, sucessoCall) {
+      this.removerPorId(this.atividadesdb, id, errorCall, sucessoCall);
+  },
+
   obterTarefa: function(id, errorCall, sucessoCall) {
 
       this.obterPorId(this.atividadesdb, id, errorCall, sucessoCall);
@@ -64,6 +68,10 @@ var Repository = {
       this.obterPorId(this.entradasdb, id, errorCall, sucessoCall);
   },
 
+  removerEntrada: function(id, errorCall, sucessoCall) {
+      this.removerPorId(this.entradasdb, id, errorCall, sucessoCall);
+  },
+
   obterEntradas: function(data, errorCall, sucessoCall) {
 
     data = this.getFormatedDate(data);
@@ -81,6 +89,25 @@ var Repository = {
       Repository.entradasdb.find({
         selector: {data: data, milliseconds: {'$exists':true}},
         sort:[{'milliseconds':'asc'}]
+      }).then(function (result) {
+        sucessoCall(result);
+      }).catch(function (err) {
+        errorCall(err);
+      });
+    })
+  },
+
+  obterEntradasTarefa: function(tarefa_id, errorCall, sucessoCall) {
+
+
+    this.entradasdb.createIndex({
+      index: {
+        fields: ['tarefa_id']
+      }
+    }).then(function (result) {
+
+      Repository.entradasdb.find({
+        selector: {tarefa_id: tarefa_id}
       }).then(function (result) {
         sucessoCall(result);
       }).catch(function (err) {
@@ -121,6 +148,12 @@ var Repository = {
       }).catch(function (err) {
         errorCall(err);
       });
+  },
+
+  removerPorId: function(db, id, errorCall, sucessoCall) {
+    this.obterPorId(db, id, errorCall, function(doc){
+      return db.remove(doc, sucessoCall);
+    });
   },
 
   obterClientes: function(errorCall, sucessoCall) {

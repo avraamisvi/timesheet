@@ -2,8 +2,10 @@
 var EntradaController = {
 
    ultimaEntrada: null,
+   modoListagem: true,
 
    listarEntradas: function() {
+     this.modoListagem = true;
 
      Repository.obterEntradas(new Date(), function(err){
        console.log(err);
@@ -128,6 +130,7 @@ var EntradaController = {
 
    editarEntrada: function(id) {
 
+     this.modoListagem = false;
 
      Repository.obterEntrada(id, function(err){console.log(err);}, function (doc) {
 
@@ -261,7 +264,13 @@ var EntradaController = {
      date = ''+(day<10?'0'+day:day)+'/'+(month<10?'0'+month:month)+'/'+date.getFullYear();
 
      return {date: date, min: min, hour: hour, time: time};
+   },
+
+   updateList: function() {
+     if(this.modoListagem) {
+       this.listarEntradas();
+     }
    }
  }
 
-setInterval(function() {EntradaController.listarEntradas();}, 30000);
+setInterval(function() {EntradaController.updateList();}, 30000);

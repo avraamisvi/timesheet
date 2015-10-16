@@ -86,13 +86,51 @@ var TarefaController = {
       };
     }
 
+    var nome_tar = null;
+
+    if(this.editing)
+      nome_tar = this.editing.nome;
+
     tarefa.nome = $("#txt_nome").val();
     tarefa.codigo = $("#txt_codigo").val();
     tarefa.cliente_id = $("#sel_clientes").val();
 
-    Repository.salvarTarefa(tarefa, function(err){console.log(err)}, function(result) {
+    Repository.salvarTarefa(tarefa, TarefaController.tratarErro, function(result) {
+
+      if(nome_tar) {
+        if(nome_tar != TarefaController.editing.nome) {
+          Repository.obterEntradasTarefa(TarefaController.editing._id, TarefaController.tratarErro, function(res){
+            for(i =0;i < res.docs.length;i++) {
+              res.docs[i].tarefa = tarefa.nome;
+              Repository.salvarEntrada(res.docs[i], TarefaController.tratarErro, function(res){console.log(res)});
+            }
+          });
+        }
+      }
+
       TarefaController.listarTarefasCliente($("#sel_clientes").val());
     });
 
+  },
+
+  removerTarefa: function(id) {
+
+    Repository.obterTarefa(id, function(err){console.log(err)}, function(tarefa){
+      Repository.removerTarefa(id, TarefaController.tratarErro, function(result) {
+
+          Repository.obterEntradasTarefa(id, TarefaController.tratarErro, function(res){
+            for(i =0;i < res.docs.length;i++) {
+              Repository.removerEntrada(res.docs[i]._id, TarefaController.tratarErro, function(res){console.log(res)});
+            }
+          });
+
+        TarefaController.listarTarefasCliente(tarefa.cliente_id);
+      });
+    });
+
+  },
+
+  tratarErro: function(err) {
+    console.log(err);
   }
 }
